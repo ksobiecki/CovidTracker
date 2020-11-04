@@ -2,6 +2,9 @@ package com.example.covidtracker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -48,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
             if (contentArray == continentsArray) {
                 addContinentButtonsEvents(btn, btn.getText().toString());
             }
+            else{
+                addCountryButtonEvents(btn,btn.getText().toString());
+            }
+
 
             buttonPanel.addView(btn);
         }
@@ -62,6 +69,21 @@ public class MainActivity extends AppCompatActivity {
                 isCountriesMenu = true;
             }
         });
+    }
+
+    public void addCountryButtonEvents (Button btn, String name){
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onCountryClick(name);
+            }
+        });
+    }
+
+    public void onCountryClick (String country){
+        Intent myIntent = new Intent(getApplicationContext(), CountryMenuActivity.class);
+        myIntent.putExtra("country",country);
+        startActivity(myIntent);
     }
 
     public void onContinentClick (String continent) {
