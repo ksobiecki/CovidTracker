@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
         for (String item: contentArray) {
             Button btn = new Button(this);
             btn.setText(item);
+            btn.setBackground(getResources().getDrawable(R.drawable.customized_button));
+            //btn.setLayoutParams(new LinearLayout.LayoutParams(600,160));
+
 
             if (contentArray == continentsArray) {
                 addContinentButtonsEvents(btn, btn.getText().toString());
