@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     TextView contentText;
     Boolean isCountriesMenu = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         }
         catch(NullPointerException e){}
 
-        buttonPanel = (LinearLayout) findViewById(R.id.buttonPanel) ;
+        buttonPanel = (LinearLayout) findViewById(R.id.buttonPanel);
         contentText = (TextView) findViewById(R.id.textContent);
 
         generateButtons(continentsArray, buttonPanel);
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         for (String item: contentArray) {
             Button btn = new Button(this);
             btn.setText(item);
+            btn.setBackground(getResources().getDrawable(R.drawable.customized_button));
 
             if (contentArray == continentsArray) {
                 addContinentButtonsEvents(btn, btn.getText().toString());
@@ -54,10 +58,11 @@ public class MainActivity extends AppCompatActivity {
             else{
                 addCountryButtonEvents(btn,btn.getText().toString());
             }
-
-
-            buttonPanel.addView(btn);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(600,160);
+            params.setMargins(240,10,0,10);
+            buttonPanel.addView(btn,params);
         }
+
     }
 
     public void addContinentButtonsEvents (Button btn, String name) {
