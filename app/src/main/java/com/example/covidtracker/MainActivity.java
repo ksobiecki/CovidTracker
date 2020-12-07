@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout buttonPanel;
     TextView contentText;
+    TextView header;
     Boolean isCountriesMenu = false;
 
 
@@ -49,33 +50,37 @@ public class MainActivity extends AppCompatActivity {
         }
         catch(NullPointerException e){}
 
+        buttonPanel = (LinearLayout) findViewById(R.id.buttonPanel);
+        contentText = (TextView) findViewById(R.id.textContent);
+        header = (TextView) findViewById(R.id.textView);
+
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.covid19api.com/summary/")
+                .baseUrl("https://api.covid19api.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         placeholderAPI = retrofit.create(PlaceholderAPI.class);
 
-        Call<List<PlaceHolderPost>> call = placeholderAPI.getPosts();
+        Call<List> call = placeholderAPI.getPosts();
 
-        call.enqueue(new Callback<List<PlaceHolderPost>>() {
+        call.enqueue(new Callback<List>() {
+
             @Override
-            public void onResponse(Call<List<PlaceHolderPost>> call, Response<List<PlaceHolderPost>> response) {
+            public void onResponse(Call<List> call, Response<List> response) {
 
                 if (response.isSuccessful()) {
                     List posts = response.body();
-                    Log.e("Yo", posts.get(3).toString());
-                    TextView textView = findViewById(R.id.text);
-                    textView.setText(posts.get(3).toString());
+                    header.setText("polaczono");
                 } else {
-                    Log.e("Yo", "Boo!");
+                    header.setText("nie polaczono");
                     return;
                 }
             }
 
             @Override
-            public void onFailure(Call<List<PlaceHolderPost>> call, Throwable t) {
+            public void onFailure(Call<List> call, Throwable t) {
                 Log.e("Yo", "Errror!");
+                header.setText("87");
             }
 
         });
@@ -83,9 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("Yo","Hello!");
 
-
-        buttonPanel = (LinearLayout) findViewById(R.id.buttonPanel);
-        contentText = (TextView) findViewById(R.id.textContent);
 
         generateButtons(continentsArray, buttonPanel);
     }
