@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
                     List posts = response.body();
-                    header.setText("polaczono");
+                    header.setText("polaczono");;
                 } else {
                     header.setText("nie polaczono");
                     return;
