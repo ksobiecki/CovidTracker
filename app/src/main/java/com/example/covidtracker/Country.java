@@ -1,5 +1,7 @@
 package com.example.covidtracker;
 
+import com.google.gson.annotations.SerializedName;
+
 
 public class PlaceHolderCountries {
     private String CountryName;
