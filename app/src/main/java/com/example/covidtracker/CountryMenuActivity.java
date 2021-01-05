@@ -63,6 +63,7 @@ public class CountryMenuActivity extends AppCompatActivity {
                     deaths.setText("Deaths: " + countrySpecifics.get(countrySpecifics.size()-1).getDeaths());
                     recovered.setText("Recovered: " + countrySpecifics.get(countrySpecifics.size()-1).getRecovered());
                     total_cases.setText("Total cases: " + countrySpecifics.get(countrySpecifics.size()-1).getConfirmed());
+
                 } else {
                     return;
                 }
