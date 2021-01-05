@@ -20,14 +20,15 @@ public class CountryMenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_country_menu);
+
         try {
             this.getSupportActionBar().hide();
         } catch (NullPointerException e) {
         }
+
         String countryName = getIntent().getStringExtra("country");
         TextView country = (TextView) findViewById(R.id.country);
         country.setText(countryName);
-
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.covid19api.com")
@@ -36,7 +37,7 @@ public class CountryMenuActivity extends AppCompatActivity {
 
         placeholderAPI = retrofit.create(PlaceholderAPI.class);
 
-        Call<PlaceHolderSummary> call = placeholderAPI.getToZajebaneApi();
+        Call<PlaceHolderSummary> call = placeholderAPI.getCountry();
 
 
         call.enqueue(new Callback<PlaceHolderSummary>() {
