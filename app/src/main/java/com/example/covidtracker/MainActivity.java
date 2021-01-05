@@ -32,8 +32,6 @@ public class MainActivity extends AppCompatActivity {
     private String [] nAmericaCountries = new String [] {"USA", "Canada", "Mexico"};
     private String [] sAmericaCountries = new String [] {"Chile", "Brazil", "Argentina"};
 
-    private PlaceholderAPI placeholderAPI;
-
     LinearLayout buttonPanel;
     TextView contentText;
     TextView header;
@@ -53,38 +51,6 @@ public class MainActivity extends AppCompatActivity {
         buttonPanel = (LinearLayout) findViewById(R.id.buttonPanel);
         contentText = (TextView) findViewById(R.id.textContent);
         header = (TextView) findViewById(R.id.textView);
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.covid19api.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        placeholderAPI = retrofit.create(PlaceholderAPI.class);
-
-        Call<PlaceHolderSummary> call = placeholderAPI.getToZajebaneApi();
-
-
-        call.enqueue(new Callback<PlaceHolderSummary>() {
-
-            @Override
-            public void onResponse(Call<PlaceHolderSummary> call, Response<PlaceHolderSummary> response) {
-                if (response.isSuccessful()) {
-                    PlaceHolderSummary posts = response.body();
-                    header.setText("onResponse is Successful");;
-                    Log.e("Success", String.valueOf(posts.getDate()));
-                } else {
-                    header.setText("onResponse si failure");
-                    return;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<PlaceHolderSummary> call, Throwable t) {
-                Log.e("Yo", "Errror!");
-                header.setText("onFailure()");
-            }
-
-        });
 
 
 
