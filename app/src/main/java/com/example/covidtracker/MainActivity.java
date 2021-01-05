@@ -55,38 +55,37 @@ public class MainActivity extends AppCompatActivity {
         header = (TextView) findViewById(R.id.textView);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.covid19api.com/")
+                .baseUrl("https://api.covid19api.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         placeholderAPI = retrofit.create(PlaceholderAPI.class);
 
-        Call<List> call = placeholderAPI.getPosts();
+        Call<PlaceHolderSummary> call = placeholderAPI.getToZajebaneApi();
 
-        call.enqueue(new Callback<List>() {
+
+        call.enqueue(new Callback<PlaceHolderSummary>() {
 
             @Override
-            public void onResponse(Call<List> call, Response<List> response) {
-
+            public void onResponse(Call<PlaceHolderSummary> call, Response<PlaceHolderSummary> response) {
                 if (response.isSuccessful()) {
-                    List posts = response.body();
-                    header.setText("polaczono");;
+                    PlaceHolderSummary posts = response.body();
+                    header.setText("onResponse is Successful");;
+                    Log.e("Success", String.valueOf(posts.getDate()));
                 } else {
-                    header.setText("nie polaczono");
+                    header.setText("onResponse si failure");
                     return;
                 }
             }
 
             @Override
-            public void onFailure(Call<List> call, Throwable t) {
+            public void onFailure(Call<PlaceHolderSummary> call, Throwable t) {
                 Log.e("Yo", "Errror!");
-                header.setText("87");
+                header.setText("onFailure()");
             }
 
         });
 
-
-        Log.d("Yo","Hello!");
 
 
         generateButtons(continentsArray, buttonPanel);

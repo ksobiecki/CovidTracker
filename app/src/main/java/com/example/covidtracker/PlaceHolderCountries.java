@@ -1,59 +1,56 @@
 package com.example.covidtracker;
 
-import java.util.Date;
 
-public class PlaceHolderPost {
-    private String countryName;
-    private String countryCode;
-    private String slug;
-    private Integer newConfirmed;
-    private Integer totalConfirmed;
-    private Integer newDeaths;
+public class PlaceHolderCountries {
+    private String CountryName;
+    private String CountryCode;
+    private String Slug;
+    private Integer NewConfirmed;
+    private Integer TotalConfirmed;
+    private Integer NewDeaths;
+    private Integer TotalDeaths;
+    private Integer NewRecovered;
+    private Integer TotalRecovered;
+    private String  Date;
 
     public String getCountryName() {
-        return countryName;
+        return CountryName;
     }
 
     public String getCountryCode() {
-        return countryCode;
+        return CountryCode;
     }
 
     public String getSlug() {
-        return slug;
+        return Slug;
     }
 
     public Integer getNewConfirmed() {
-        return newConfirmed;
+        return NewConfirmed;
     }
 
     public Integer getTotalConfirmed() {
-        return totalConfirmed;
+        return TotalConfirmed;
     }
 
     public Integer getNewDeaths() {
-        return newDeaths;
+        return NewDeaths;
     }
 
     public Integer getTotalDeaths() {
-        return totalDeaths;
+        return TotalDeaths;
     }
 
     public Integer getNewRecovered() {
-        return newRecovered;
+        return NewRecovered;
     }
 
     public Integer getTotalRecovered() {
-        return totalRecovered;
+        return TotalRecovered;
     }
 
     public String getDate() {
-        return date;
+        return Date;
     }
-
-    private Integer totalDeaths;
-    private Integer newRecovered;
-    private Integer totalRecovered;
-    private String date;
-
 }
 
