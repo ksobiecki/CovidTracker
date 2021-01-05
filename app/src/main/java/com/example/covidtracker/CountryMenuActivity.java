@@ -46,6 +46,7 @@ public class CountryMenuActivity extends AppCompatActivity {
             public void onResponse(Call<PlaceHolderSummary> call, Response<PlaceHolderSummary> response) {
                 if (response.isSuccessful()) {
                     PlaceHolderSummary posts = response.body();
+
                 } else {
 
                     return;
