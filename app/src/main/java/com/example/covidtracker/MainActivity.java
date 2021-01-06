@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -20,19 +22,19 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String[] continentsArray = new String[]{"Africa", "Asia", "Australia", "Europe", "North America", "South America"};
-    private String[] africaCountries = new String[]{"Chad", "Egypt", "Sudan"};
-    private String[] asiaCountries = new String[]{"China", "Vietnam", "Korea", "India"};
-    private String[] australiaCountries = new String[]{"Australia", "Malaysia"};
-    private String[] europeCountries = new String[]{"Germany", "France", "Poland", "Spain", "Hungary", "Greece", "Belarus", "Bulgaria", "Slovakia", "Ukraine", "Belgium", "Switzerland", "Montenegro", "Czech Republic"};
-    private String[] nAmericaCountries = new String[]{"USA", "Canada", "Mexico"};
-    private String[] sAmericaCountries = new String[]{"Chile", "Brazil", "Argentina"};
-
+    private List<String> continentsArray = Arrays.asList(new String[]{"Africa", "Asia", "Australia and Oceania", "Europe", "North America", "South America"});
+    private List<String> africaCountries = new ArrayList<>();
+    private List<String> asiaCountries = new ArrayList<>();
+    private List<String> australiaCountries = new ArrayList<>();
+    private List<String> europeCountries = new ArrayList<>();
+    private List<String> nAmericaCountries = new ArrayList<>();
+    private List<String> sAmericaCountries = new ArrayList<>();
+    List<ContinentCountry> continentCountries;
     LinearLayout buttonPanel;
     TextView contentText;
     TextView header;
     Boolean isCountriesMenu = false;
-    private ContinentCountryApi continentCountryApi;
+    private ContinentCountryApi continentCountryApi = null;
     String countryCode;
 
     @Override
@@ -60,10 +62,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<ContinentCountry>> call, Response<List<ContinentCountry>> response) {
                 if (response.isSuccessful()) {
-                    List<ContinentCountry> posts = response.body();
+                    continentCountries = response.body();
                 } else {
                     return;
                 }
+                fillContinentLists();
+                generateButtons(continentsArray, buttonPanel);
             }
 
             @Override
@@ -71,12 +75,13 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("Yo", "Errrorrrr!");
             }
         });
-        generateButtons(continentsArray, buttonPanel);
+
+
 
 
     }
 
-    public void generateButtons(String[] contentArray, LinearLayout buttonPanel) {
+    public void generateButtons(List<String> contentArray, LinearLayout buttonPanel) {
         buttonPanel.removeAllViews();
 
         for (String item : contentArray) {
@@ -118,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     public void onCountryClick(String country) {
         Intent myIntent = new Intent(MainActivity.this, CountryMenuActivity.class);
         myIntent.putExtra("country", country);
-        myIntent.putExtra("countryCode", countryCode);
+        myIntent.putExtra("countryCode", "PL");
         startActivity(myIntent);
     }
 
@@ -153,5 +158,30 @@ public class MainActivity extends AppCompatActivity {
             contentText.setText("");
             isCountriesMenu = false;
         } else super.onBackPressed();
+    }
+
+    public void fillContinentLists(){
+            for(ContinentCountry continentCountry:continentCountries){
+
+                switch (continentCountry.getRegion()) {
+                    case "Africa":
+                        africaCountries.add(continentCountry.getName());
+                        break;
+                    case "Asia":
+                        asiaCountries.add(continentCountry.getName());
+                        break;
+                    case "Oceania":
+                        australiaCountries.add(continentCountry.getName());
+                        break;
+                    case "Europe":
+                        europeCountries.add(continentCountry.getName());
+                        break;
+                    case "Americas":
+                        if (continentCountry.getSubregion().equals("South America"))
+                            sAmericaCountries.add(continentCountry.getName());
+                        else nAmericaCountries.add(continentCountry.getName());
+                        break;
+                }
+        }
     }
 }
