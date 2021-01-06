@@ -48,7 +48,8 @@ public class CountryMenuActivity extends AppCompatActivity {
 
         placeholderAPI = retrofit2.create(PlaceholderAPI.class);
 
-
+        Log.i("CountryNameCheck:",countryName);
+        Log.i("CountryCodeCheck:",ISO2);
         Call<List<CountryShort>> callShort = placeholderAPI.getListShortName("/countries");
         callShort.enqueue(new Callback<List<CountryShort>>() {
             @Override
@@ -72,8 +73,10 @@ public class CountryMenuActivity extends AppCompatActivity {
                             deaths.setText("Deaths: " + countrySpecifics.get(countrySpecifics.size()-1).getDeaths());
                             recovered.setText("Recovered: " + countrySpecifics.get(countrySpecifics.size()-1).getRecovered());
                             total_cases.setText("Total cases: " + countrySpecifics.get(countrySpecifics.size()-1).getConfirmed());
+                            Log.i("covid:","It works");
 
                         } else {
+                            Log.e("Covid", "It doesn't work");
                             return;
                         }
                     }
