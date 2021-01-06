@@ -12,7 +12,7 @@ public class CountryName {
     private String Deaths;
     private String Recovered;
     private String Active;
-    private String Dete;
+    private String Date;
 
     public String getCountry() {
         return Country;
@@ -58,7 +58,7 @@ public class CountryName {
         return Active;
     }
 
-    public String getDete() {
-        return Dete;
+    public String getDate() {
+        return Date;
     }
 }

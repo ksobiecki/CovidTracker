@@ -33,20 +33,20 @@
         app:layout_constraintTop_toBottomOf="@+id/CovidTracker2" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/cases"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="200dp"
-        android:text="Cases:"
+        android:text="Active cases:"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintBottom_toTopOf="@+id/deaths"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/deaths"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -54,12 +54,12 @@
         android:layout_marginTop="40dp"
         android:text="Deaths:"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintBottom_toTopOf="@+id/recovered"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/cases" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/recovered"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -68,6 +68,18 @@
         android:text="Recovered:"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/deaths" />
+
+    <TextView
+        android:id="@+id/total_cases"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="40dp"
+        android:text="Total cases: "
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recovered" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
