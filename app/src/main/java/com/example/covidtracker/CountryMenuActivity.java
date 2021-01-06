@@ -101,7 +101,7 @@ public class CountryMenuActivity extends AppCompatActivity {
                 return cs.getCountry();
             }
         }
-        return null;
+        return "Poland";
     }
 
     /*public String countryNameByISO2(List<CountryName> countries, String ISO2){
