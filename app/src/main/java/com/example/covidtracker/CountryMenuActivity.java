@@ -82,7 +82,7 @@ public class CountryMenuActivity extends AppCompatActivity {
                                 deaths.setText("Deaths: No data");
                                 recovered.setText("Recovered: No data");
                                 total_cases.setText("Total cases: No data");
-                                date.setText("Last update date: No data");
+                                date.setText("Last update date: No data");;
                             }
 
                         } else {
