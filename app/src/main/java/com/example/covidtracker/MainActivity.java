@@ -22,13 +22,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<String> continentsArray = Arrays.asList(new String[]{"Africa", "Asia", "Australia and Oceania", "Europe", "North America", "South America"});
+    private List<String> continentsArray = Arrays.asList(new String[]{"Africa", "Asia", "Australia and Oceania", "Europe", "North America", "South America", "Other"});
     private List<String> africaCountries = new ArrayList<>();
     private List<String> asiaCountries = new ArrayList<>();
     private List<String> australiaCountries = new ArrayList<>();
     private List<String> europeCountries = new ArrayList<>();
     private List<String> nAmericaCountries = new ArrayList<>();
     private List<String> sAmericaCountries = new ArrayList<>();
+    private List<String> otherCountries = new ArrayList<>();
     List<ContinentCountry> continentCountries;
     LinearLayout buttonPanel;
     TextView contentText;
@@ -148,6 +149,8 @@ public class MainActivity extends AppCompatActivity {
             case "south america":
                 generateButtons(sAmericaCountries, buttonPanel);
                 break;
+            default:
+                generateButtons(otherCountries, buttonPanel);
         }
     }
 
@@ -180,6 +183,9 @@ public class MainActivity extends AppCompatActivity {
                         if (continentCountry.getSubregion().equals("South America"))
                             sAmericaCountries.add(continentCountry.getName());
                         else nAmericaCountries.add(continentCountry.getName());
+                        break;
+                    default:
+                        otherCountries.add(continentCountry.getName());
                         break;
                 }
         }

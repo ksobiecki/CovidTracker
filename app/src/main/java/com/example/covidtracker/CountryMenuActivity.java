@@ -20,7 +20,7 @@ public class CountryMenuActivity extends AppCompatActivity {
     List<CountryName> countrySpecifics = null;
     List<CountryShort> countryShortList;
 
-    TextView country, cases, deaths, recovered, total_cases;
+    TextView country, cases, deaths, recovered, total_cases, date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,7 @@ public class CountryMenuActivity extends AppCompatActivity {
         deaths = (TextView) findViewById(R.id.deaths);
         recovered = (TextView) findViewById(R.id.recovered);
         total_cases = (TextView) findViewById(R.id.total_cases);
+        date = (TextView) findViewById(R.id.date);
         country.setText(countryName);
 
         Retrofit retrofit2 = new Retrofit.Builder()
@@ -74,12 +75,14 @@ public class CountryMenuActivity extends AppCompatActivity {
                                 deaths.setText("Deaths: " + countrySpecifics.get(countrySpecifics.size() - 1).getDeaths());
                                 recovered.setText("Recovered: " + countrySpecifics.get(countrySpecifics.size() - 1).getRecovered());
                                 total_cases.setText("Total cases: " + countrySpecifics.get(countrySpecifics.size() - 1).getConfirmed());
+                                date.setText("Last update date: " + countrySpecifics.get(countrySpecifics.size()-1).getDate().substring(0,10));
                                 Log.i("covid:", "It works");
                             } else {
                                 cases.setText("Active cases: No data");
                                 deaths.setText("Deaths: No data");
                                 recovered.setText("Recovered: No data");
                                 total_cases.setText("Total cases: No data");
+                                date.setText("Last update date: No data");
                             }
 
                         } else {
