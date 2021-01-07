@@ -22,6 +22,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+    static final String API_SOURCE = "https://restcountries.eu";
+
     private List<String> continentsArray = Arrays.asList(new String[]{"Africa", "Asia", "Australia and Oceania", "Europe", "North America", "South America", "Other"});
     private List<String> africaCountries = new ArrayList<>();
     private List<String> asiaCountries = new ArrayList<>();
@@ -36,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     TextView header;
     Boolean isCountriesMenu = false;
     private ContinentCountryApi continentCountryApi = null;
-    String countryCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,19 +53,20 @@ public class MainActivity extends AppCompatActivity {
         header = (TextView) findViewById(R.id.textView);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://restcountries.eu")
+                .baseUrl(API_SOURCE)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         continentCountryApi = retrofit.create(ContinentCountryApi.class);
 
-        Call<List<ContinentCountry>> call = continentCountryApi.getContinentCountries();
+        Call<List<ContinentCountry>> call = continentCountryApi.getContinentCountries("/rest/v2/all");
         call.enqueue(new Callback<List<ContinentCountry>>() {
             @Override
             public void onResponse(Call<List<ContinentCountry>> call, Response<List<ContinentCountry>> response) {
                 if (response.isSuccessful()) {
                     continentCountries = response.body();
                 } else {
+                    Log.e(getString(R.string.CONN_TAG), "Response is not successful: " + API_SOURCE + "/rest/v2/all");
                     return;
                 }
                 fillContinentLists();
@@ -73,11 +75,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<ContinentCountry>> call, Throwable t) {
-                Log.e("Yo", "Errrorrrr!");
+                Log.e(getString(R.string.CONN_TAG), "Failed to connect: " + API_SOURCE + "/rest/v2/all");
             }
         });
-
-
 
 
     }
