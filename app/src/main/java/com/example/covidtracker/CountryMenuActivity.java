@@ -93,6 +93,8 @@ public class CountryMenuActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<List<CountryName>> call, Throwable t) {
+                        //ViewDialog alert = new ViewDialog();
+                        //alert.showDialog(CountryMenuActivity.this, "Errorito");
                         Log.e("Yo", "Errror!");
                     }
 
@@ -101,6 +103,8 @@ public class CountryMenuActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<CountryShort>> callShort, Throwable t) {
+                //ViewDialog alert = new ViewDialog();
+                //alert.showDialog(CountryMenuActivity.this, "Errorito");
                 Log.e("onFailure", "Errror!");
             }
         });
