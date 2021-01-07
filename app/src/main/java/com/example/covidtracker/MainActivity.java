@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     public void onCountryClick(String country) {
         Intent myIntent = new Intent(MainActivity.this, CountryMenuActivity.class);
         myIntent.putExtra("country", country);
-        myIntent.putExtra("countryCode", "PL");
+        myIntent.putExtra("countryCode", ISO2WhereCountryName(country));
         startActivity(myIntent);
     }
 
@@ -183,5 +183,13 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
         }
+    }
+
+    public String ISO2WhereCountryName(String countryName){
+        for(ContinentCountry cc : continentCountries){
+            if(cc != null && cc.getName().equals(countryName))
+                return cc.getAlpha2Code();
+        }
+        return null;
     }
 }

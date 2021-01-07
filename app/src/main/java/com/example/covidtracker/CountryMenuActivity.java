@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class CountryMenuActivity extends AppCompatActivity {
 
     private PlaceholderAPI placeholderAPI;
-    List<CountryName> countrySpecifics;
+    List<CountryName> countrySpecifics = null;
     List<CountryShort> countryShortList;
 
     TextView country, cases, deaths, recovered, total_cases;
@@ -57,11 +57,11 @@ public class CountryMenuActivity extends AppCompatActivity {
                 Log.i("onResponse", "Successful short countries");
                 countryShortList = response.body();
 
-                String countryName = countryShortWhereISO2(countryShortList, ISO2);
+                String countryName = getCountryShortNameWhereISO2(ISO2);
 
-                Log.i("Sprawdzonko", "ISO2: " + ISO2 + " , CountryName: " + countryName);
+                Log.i("Sprawdzonko", "ISO2: " + ISO2 + " , CountryName: " + getCountryShortSlugFromCountryName(countryName));
 
-                Call<List<CountryName>> call = placeholderAPI.getListCountryName("/country/" + countryName);
+                Call<List<CountryName>> call = placeholderAPI.getListCountryName("/country/" + getCountryShortSlugFromCountryName(countryName));
 
 
                 call.enqueue(new Callback<List<CountryName>>() {
@@ -69,14 +69,21 @@ public class CountryMenuActivity extends AppCompatActivity {
                     public void onResponse(Call<List<CountryName>> call, Response<List<CountryName>> response) {
                         if (response.isSuccessful()) {
                             countrySpecifics = response.body();
-                            cases.setText("Active cases: " + countrySpecifics.get(countrySpecifics.size()-1).getActive());
-                            deaths.setText("Deaths: " + countrySpecifics.get(countrySpecifics.size()-1).getDeaths());
-                            recovered.setText("Recovered: " + countrySpecifics.get(countrySpecifics.size()-1).getRecovered());
-                            total_cases.setText("Total cases: " + countrySpecifics.get(countrySpecifics.size()-1).getConfirmed());
-                            Log.i("covid:","It works");
+                            if(countrySpecifics.size() != 0) {
+                                cases.setText("Active cases: " + countrySpecifics.get(countrySpecifics.size() - 1).getActive());
+                                deaths.setText("Deaths: " + countrySpecifics.get(countrySpecifics.size() - 1).getDeaths());
+                                recovered.setText("Recovered: " + countrySpecifics.get(countrySpecifics.size() - 1).getRecovered());
+                                total_cases.setText("Total cases: " + countrySpecifics.get(countrySpecifics.size() - 1).getConfirmed());
+                                Log.i("covid:", "It works");
+                            } else {
+                                cases.setText("Active cases: No data");
+                                deaths.setText("Deaths: No data");
+                                recovered.setText("Recovered: No data");
+                                total_cases.setText("Total cases: No data");
+                            }
 
                         } else {
-                            Log.e("Covid", "It doesn't work");
+                            Log.e("86 Check", "/country/" + countryName);
                             return;
                         }
                     }
@@ -98,10 +105,19 @@ public class CountryMenuActivity extends AppCompatActivity {
     }
 
     //zwraca ISO2 po podaniu nazwy
-    public String countryShortWhereISO2(List<CountryShort> countries, String ISO2){
-        for(CountryShort cs : countries){
+    public String getCountryShortNameWhereISO2(String ISO2){
+        for(CountryShort cs : countryShortList){
             if(cs != null && cs.getISO2().equals(ISO2)){
                 return cs.getCountry();
+            }
+        }
+        return null;
+    }
+
+    public String getCountryShortSlugFromCountryName(String countryName){
+        for(CountryShort cs : countryShortList){
+            if(cs != null && cs.getCountry().equals(countryName)){
+                return cs.getSlug();
             }
         }
         return null;
