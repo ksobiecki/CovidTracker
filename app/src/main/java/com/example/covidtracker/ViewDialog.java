@@ -9,11 +9,15 @@ import android.widget.TextView;
 
 public class ViewDialog {
 
-    public void showDialog(Activity activity, String msg){
+    public void showDialog(Activity activity, String msg, String type){
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
-        dialog.setContentView(R.layout.connection_error_custom_popups);
+
+        int resourceID = activity.getResources().getIdentifier(type + "_popup", "layout", activity.getPackageName() );
+
+        dialog.setContentView(resourceID);
+
 
         TextView text = (TextView) dialog.findViewById(R.id.text_dialog);
         text.setText(msg);
@@ -23,10 +27,12 @@ public class ViewDialog {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                activity.onBackPressed();
             }
-        });
 
+        });
         dialog.show();
 
     }
+
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Covid Tracker</string>
+    <string name="CONN_TAG">Connection</string>
 </resources>
