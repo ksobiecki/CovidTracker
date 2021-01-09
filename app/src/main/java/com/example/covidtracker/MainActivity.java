@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     TextView header;
     Boolean isCountriesMenu = false;
     private ContinentCountryApi continentCountryApi;
+    String countryCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +61,6 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<ContinentCountry>> call, Response<List<ContinentCountry>> response) {
                 if (response.isSuccessful()) {
                     List<ContinentCountry> posts = response.body();
-                    String continent = posts.get(0).getContinent();
-                    String country = posts.get(0).getCountryName();
-                    Log.i("Continent", "onResponse: "+continent +" " + country);
                 } else {
                     return;
                 }
@@ -118,8 +116,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onCountryClick(String country) {
-        Intent myIntent = new Intent(getApplicationContext(), CountryMenuActivity.class);
+        Intent myIntent = new Intent(MainActivity.this, CountryMenuActivity.class);
         myIntent.putExtra("country", country);
+        myIntent.putExtra("countryCode", countryCode);
         startActivity(myIntent);
     }
 

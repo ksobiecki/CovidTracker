@@ -7,7 +7,7 @@ import retrofit2.http.GET;
 
 public interface ContinentCountryApi {
 
-    @GET("/rest/v2/all?fields=name;region")
-    //@GET("/rest/v2/all")
+    //@GET("/rest/v2/all?fields=name;region")
+    @GET("/rest/v2/all")
     Call<List<ContinentCountry>> getContinentCountries();
 }

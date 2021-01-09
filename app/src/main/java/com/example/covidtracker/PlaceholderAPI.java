@@ -12,6 +12,9 @@ public interface PlaceholderAPI {
     Call<PlaceHolderSummary> getSummary();
 
     @GET("{fullUrl}")
-    Call<List<CountryName>> get(@Path(value = "fullUrl", encoded = true) String fullUrl);
+    Call<List<CountryName>> getListCountryName(@Path(value = "fullUrl", encoded = true) String fullUrl);
+
+    @GET("{full}")
+    Call<List<CountryShort>> getListShortName(@Path(value = "full", encoded = true) String full);
 
 }
