@@ -32,15 +32,27 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <SearchView
+        android:id="@+id/searchArea"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        app:queryHint="Search countries"
+        android:iconifiedByDefault="false"
+        app:layout_constraintBottom_toTopOf="@id/scrollArea"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textContent" />
+
     <ScrollView
         android:id="@+id/scrollArea"
         android:layout_width="408dp"
         android:layout_height="486dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView">
+        app:layout_constraintTop_toBottomOf="@id/searchArea"
+        app:layout_constraintVertical_bias="0.758">
 
         <LinearLayout
             android:id="@+id/buttonPanel"
@@ -48,6 +60,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="vertical">
+
 
         </LinearLayout>
     </ScrollView>

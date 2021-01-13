@@ -28,9 +28,11 @@
         android:layout_marginRight="8dp"
         android:text="TextView"
         android:textSize="40dp"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CovidTracker2" />
+        app:layout_constraintTop_toBottomOf="@+id/CovidTracker2"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/cases"
@@ -38,12 +40,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="40dp"
         android:text="Active cases:"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/deaths"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/country" />
 
     <TextView
         android:id="@+id/deaths"
