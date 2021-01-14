@@ -3,6 +3,7 @@ package com.example.covidtracker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -116,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
         for (String item : contentArray) {
             Button btn = new Button(this);
             btn.setText(item);
+            btn.setTextColor(Color.parseColor("#c0c0c0"));
             btn.setBackground(getResources().getDrawable(R.drawable.customized_button));
 
             if (contentArray == continentsArray) {
