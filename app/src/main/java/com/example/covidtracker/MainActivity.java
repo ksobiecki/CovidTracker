@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private List<String> sAmericaCountries = new ArrayList<>();
     private List<String> otherCountries = new ArrayList<>();
     private List<String> filteredCountries = new ArrayList<>();
+    int width = 0;
     String currentContinent = null;
     List<ContinentCountry> continentCountries;
     LinearLayout buttonPanel;
@@ -51,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
             this.getSupportActionBar().hide();
         } catch (NullPointerException e) {
         }
-
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        width = displayMetrics.widthPixels;
         buttonPanel = (LinearLayout) findViewById(R.id.buttonPanel);
         contentText = (TextView) findViewById(R.id.textContent);
         search = (SearchView) findViewById(R.id.searchArea);
@@ -124,8 +128,9 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 addCountryButtonEvents(btn, btn.getText().toString());
             }
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(600, 160);
-            params.setMargins(240, 10, 0, 10);
+            Log.d("Width", "generateButtons: Width" + width);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width-120, 160);
+            params.setMargins(30, 10, 30, 10);
             buttonPanel.addView(btn, params);
         }
     }
