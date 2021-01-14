@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -32,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
     private List<String> nAmericaCountries = new ArrayList<>();
     private List<String> sAmericaCountries = new ArrayList<>();
     private List<String> otherCountries = new ArrayList<>();
+    private List<String> filteredCountries = new ArrayList<>();
+    String currentContinent = null;
     List<ContinentCountry> continentCountries;
     LinearLayout buttonPanel;
     TextView contentText;
-    TextView header;
     Boolean isCountriesMenu = false;
+    SearchView search;
     private ContinentCountryApi continentCountryApi = null;
 
     @Override
@@ -50,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         buttonPanel = (LinearLayout) findViewById(R.id.buttonPanel);
         contentText = (TextView) findViewById(R.id.textContent);
-        header = (TextView) findViewById(R.id.textView);
+        search = (SearchView) findViewById(R.id.searchArea);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_SOURCE)
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
                 fillContinentLists();
-                generateButtons(continentsArray, buttonPanel);
+                generateButtons(continentsArray);
             }
 
             @Override
@@ -79,12 +82,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if(!(query.isEmpty()||query==""||query==null)) {
+                    for (ContinentCountry country : continentCountries) {
+                        if (country.getName().toLowerCase().contains(query) && country.getName().toLowerCase().indexOf(query) == 0) {
+                            Log.d("Trąba", "onQueryTextSubmit: ");
+                            filteredCountries.add(country.getName());
+                        }
+                    }
+                    Log.d("Filter", "onQueryTextSubmit: "+ query);
+                    filterButtons();
+                }  /**/
+                return true;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(newText.isEmpty()){
+                    if(isCountriesMenu){
+                        chooseContinentCountries(currentContinent);
+                    } else generateButtons(continentsArray);
+                }
+                return true;
+            }
+        });
     }
 
-    public void generateButtons(List<String> contentArray, LinearLayout buttonPanel) {
+    public void generateButtons(List<String> contentArray) {
         buttonPanel.removeAllViews();
-
+        Log.d("Trąbla", "onQueryTextSubmit: ");
         for (String item : contentArray) {
             Button btn = new Button(this);
             btn.setText(item);
@@ -99,6 +127,20 @@ public class MainActivity extends AppCompatActivity {
             params.setMargins(240, 10, 0, 10);
             buttonPanel.addView(btn, params);
         }
+    }
+
+    public void filterButtons(){
+        buttonPanel.removeAllViews();
+        for(String item:filteredCountries){
+            Button btn = new Button(this);
+            btn.setText(item);
+            btn.setBackground(getResources().getDrawable(R.drawable.customized_button));
+            addCountryButtonEvents(btn, btn.getText().toString());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(600, 160);
+            params.setMargins(240, 10, 0, 10);
+            buttonPanel.addView(btn, params);
+        }
+        filteredCountries.clear();
     }
 
     public void addContinentButtonsEvents(Button btn, String name) {
@@ -129,35 +171,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onContinentClick(String continent) {
+        chooseContinentCountries(continent);
+    }
+    public void chooseContinentCountries(String continent){
         String continentName = continent.toLowerCase();
+        currentContinent=continent;
         switch (continentName) {
             case "africa":
-                generateButtons(africaCountries, buttonPanel);
+                generateButtons(africaCountries);
                 break;
             case "asia":
-                generateButtons(asiaCountries, buttonPanel);
+                generateButtons(asiaCountries);
                 break;
-            case "australia":
-                generateButtons(australiaCountries, buttonPanel);
+            case "australia and oceania":
+                generateButtons(australiaCountries);
                 break;
             case "europe":
-                generateButtons(europeCountries, buttonPanel);
+                generateButtons(europeCountries);
                 break;
             case "north america":
-                generateButtons(nAmericaCountries, buttonPanel);
+                generateButtons(nAmericaCountries);
                 break;
             case "south america":
-                generateButtons(sAmericaCountries, buttonPanel);
+                generateButtons(sAmericaCountries);
                 break;
             default:
-                generateButtons(otherCountries, buttonPanel);
+                generateButtons(otherCountries);
         }
     }
 
     @Override
     public void onBackPressed() {
         if (isCountriesMenu) {
-            generateButtons(continentsArray, buttonPanel);
+            generateButtons(continentsArray);
             contentText.setText("");
             isCountriesMenu = false;
         } else super.onBackPressed();
@@ -175,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case "Oceania":
                         australiaCountries.add(continentCountry.getName());
+                        Log.d("Australia", "fillContinentLists: "+continentCountry.getName());
                         break;
                     case "Europe":
                         europeCountries.add(continentCountry.getName());

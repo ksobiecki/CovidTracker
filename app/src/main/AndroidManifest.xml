@@ -10,14 +10,17 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CovidTracker">
-        <activity android:name=".CountryMenuActivity"></activity>
+        android:theme="@style/Theme.CovidTracker"
+        android:windowSoftInputMode="adjustResize">
+
+        <activity android:name=".CountryMenuActivity" android:windowSoftInputMode="adjustResize">></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" android:windowSoftInputMode="adjustResize" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 

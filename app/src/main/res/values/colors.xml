@@ -9,4 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red_alert">#DA5F6A</color>
     <color name="blue_warning">#0080FF</color>
+    <color name="almond">#E0D2C3</color>
+    <color name="dark_sienna">#461220</color>
+    <color name="metal">#B0AAB1</color>
 </resources>

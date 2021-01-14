@@ -5,93 +5,157 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CountryMenuActivity">
-    <TextView
-        android:id="@+id/CovidTracker2"
-        android:layout_width="wrap_content"
+
+    <RelativeLayout
+
+        android:id="@+id/relativeLayout"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:gravity="center"
-        android:text="Covid Tracker"
-        android:textAlignment="center"
-        android:textSize="40dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/country"
-        android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/dark_sienna">
+        <TextView
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-black"
+            android:textFontWeight="900"
+            android:id="@+id/CovidTracker2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Covid Tracker"
+            android:layout_centerHorizontal="true"
+            android:textSize="40dp"
+             />
+
+        <TextView
+            android:id="@+id/country"
+            android:textColor="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
+            android:layout_marginBottom="10dp"
+            android:text="TextView"
+            android:textSize="40dp" />
+    </RelativeLayout>
+    <TableLayout
+        android:id="@+id/statsLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/relativeLayout"
+        android:layout_marginTop="60dp">
+        <TableRow
+            android:id="@+id/firstRow"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:background="@drawable/table_border">
+            <TextView
+                android:id="@+id/cases"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Active cases:"
+                android:textSize="20dp" />
+            <TextView
+                android:id="@+id/casesNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/secondRow"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:background="@color/metal">
+            <TextView
+                android:id="@+id/deaths"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deaths:"
+                android:textSize="20dp" />
+            <TextView
+                android:id="@+id/deathsNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:textSize="20dp" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/thirdRow"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:background="@drawable/table_border">
+            <TextView
+                android:id="@+id/recovered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recovered:"
+                android:textSize="20dp" />
+            <TextView
+                android:id="@+id/recoveredNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:textSize="20dp" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/fourthRow"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:background="@color/metal">
+            <TextView
+                android:id="@+id/total_cases"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total cases: "
+                android:textSize="20dp" />
+            <TextView
+                android:id="@+id/totalCasesNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:textSize="20dp" />
+         </TableRow>
+        <TableRow
+            android:id="@+id/fifthRow"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:background="@drawable/table_border">
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Last update date: "
+                android:textSize="20dp" />
+            <TextView
+                android:id="@+id/dateNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:textSize="20dp" />
+        </TableRow>
+</TableLayout>
+    <ToggleButton
+
+        android:id="@+id/toggleButtone"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="0dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="TextView"
-        android:textSize="40dp"
+        android:layout_marginBottom="108dp"
+        android:background="@drawable/toggle_selector"
+        android:textOff=""
+        android:textOn=""
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CovidTracker2" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/cases"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="200dp"
-        android:text="Active cases:"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/deaths"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/deaths"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="40dp"
-        android:text="Deaths:"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/recovered"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cases" />
-
-    <TextView
-        android:id="@+id/recovered"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="40dp"
-        android:text="Recovered:"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/deaths" />
-
-    <TextView
-        android:id="@+id/total_cases"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="40dp"
-        android:text="Total cases: "
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recovered" />
-
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="40dp"
-        android:text="Last update date: "
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/total_cases" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
