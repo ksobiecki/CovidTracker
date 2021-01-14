@@ -12,4 +12,7 @@
     <color name="almond">#E0D2C3</color>
     <color name="dark_sienna">#461220</color>
     <color name="metal">#B0AAB1</color>
+    <color name="background_dark">#121212</color>
+    <color name="font_gray">#c0c0c0</color>
+
 </resources>

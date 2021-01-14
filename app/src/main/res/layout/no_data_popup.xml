@@ -10,7 +10,7 @@
         android:id="@+id/rel1"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@color/blue_warning">
+        android:background="@color/dark_sienna">
 
         <ImageView
             android:id="@+id/error_icon"
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginBottom="20dp"
-            app:backgroundTint="@color/blue_warning"
+            app:backgroundTint="@color/dark_sienna"
             android:layout_centerHorizontal="true"
             android:gravity="center_vertical|center_horizontal"
             android:layout_below="@id/text_dialog"
