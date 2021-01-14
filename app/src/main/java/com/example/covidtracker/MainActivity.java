@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
                 fillContinentLists();
                 generateButtons(continentsArray);
             }
-
             @Override
             public void onFailure(Call<List<ContinentCountry>> call, Throwable t) {
                 Log.e(getString(R.string.CONN_TAG), "Failed to connect: " + API_SOURCE + "/rest/v2/all");
@@ -95,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     Log.d("Filter", "onQueryTextSubmit: "+ query);
                     filterButtons();
-                }  /**/
+                }
                 return true;
             }
 
@@ -137,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
             Button btn = new Button(this);
             btn.setText(item);
             btn.setBackground(getResources().getDrawable(R.drawable.customized_button));
+            btn.setTextColor(Color.parseColor("#c0c0c0"));
             addCountryButtonEvents(btn, btn.getText().toString());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(600, 160);
             params.setMargins(240, 10, 0, 10);
