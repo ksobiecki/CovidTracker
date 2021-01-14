@@ -39,11 +39,11 @@ public class CountryMenuActivity extends AppCompatActivity {
         String countryName = getIntent().getStringExtra("country");
         String ISO2 = getIntent().getStringExtra("countryCode");
         country = (TextView) findViewById(R.id.country);
-        cases = (TextView) findViewById(R.id.cases);
-        deaths = (TextView) findViewById(R.id.deaths);
-        recovered = (TextView) findViewById(R.id.recovered);
-        total_cases = (TextView) findViewById(R.id.total_cases);
-        date = (TextView) findViewById(R.id.date);
+        cases = (TextView) findViewById(R.id.casesNumber);
+        deaths = (TextView) findViewById(R.id.deathsNumber);
+        recovered = (TextView) findViewById(R.id.recoveredNumber);
+        total_cases = (TextView) findViewById(R.id.totalCasesNumber);
+        date = (TextView) findViewById(R.id.dateNumber);
         country.setText(countryName);
         alert = new ViewDialog();
 
@@ -72,20 +72,20 @@ public class CountryMenuActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             countrySpecifics = response.body();
                             if(countrySpecifics.size() != 0) {
-                                cases.setText("Active cases: " + countrySpecifics.get(countrySpecifics.size() - 1).getActive());
-                                deaths.setText("Deaths: " + countrySpecifics.get(countrySpecifics.size() - 1).getDeaths());
-                                recovered.setText("Recovered: " + countrySpecifics.get(countrySpecifics.size() - 1).getRecovered());
-                                total_cases.setText("Total cases: " + countrySpecifics.get(countrySpecifics.size() - 1).getConfirmed());
-                                date.setText("Last update date: " + countrySpecifics.get(countrySpecifics.size()-1).getDate().substring(0,10));
+                                cases.setText(countrySpecifics.get(countrySpecifics.size() - 1).getActive());
+                                deaths.setText(countrySpecifics.get(countrySpecifics.size() - 1).getDeaths());
+                                recovered.setText(countrySpecifics.get(countrySpecifics.size() - 1).getRecovered());
+                                total_cases.setText(countrySpecifics.get(countrySpecifics.size() - 1).getConfirmed());
+                                date.setText(countrySpecifics.get(countrySpecifics.size()-1).getDate().substring(0,10));
                                 Log.i(getString(R.string.CONN_TAG), "Successful response: " + API_SOURCE + "/country/" + countryName);
                             } else {
                                 //to bedzie mozna wywalić
-                                cases.setText("Active cases: No data");
-                                deaths.setText("Deaths: No data");
-                                recovered.setText("Recovered: No data");
-                                total_cases.setText("Total cases: No data");
-                                date.setText("Last update date: No data");
-                                alert.showDialog(CountryMenuActivity.this, "Krzysiu wez popraw ten wyglad", "no_data");
+                                cases.setText("No data");
+                                deaths.setText("No data");
+                                recovered.setText("No data");
+                                total_cases.setText(" No data");
+                                date.setText("No data");
+                                alert.showDialog(CountryMenuActivity.this, "There is no available data", "no_data");
                                 Log.i(getString(R.string.CONN_TAG), "Response is empty: " + API_SOURCE + "/country/" + countryName);
 
                             }

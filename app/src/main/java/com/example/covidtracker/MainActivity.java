@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
             Button btn = new Button(this);
             btn.setText(item);
             btn.setBackground(getResources().getDrawable(R.drawable.customized_button));
+            addCountryButtonEvents(btn, btn.getText().toString());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(600, 160);
             params.setMargins(240, 10, 0, 10);
             buttonPanel.addView(btn, params);
