@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     List<ContinentCountry> continentCountries;
     LinearLayout buttonPanel;
     TextView contentText;
-    TextView header;
     Boolean isCountriesMenu = false;
     SearchView search;
     private ContinentCountryApi continentCountryApi = null;
@@ -54,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
         buttonPanel = (LinearLayout) findViewById(R.id.buttonPanel);
         contentText = (TextView) findViewById(R.id.textContent);
-        header = (TextView) findViewById(R.id.textView);
         search = (SearchView) findViewById(R.id.searchArea);
 
         Retrofit retrofit = new Retrofit.Builder()

@@ -55,14 +55,12 @@
                 android:id="@+id/cases"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
                 android:text="Active cases:"
                 android:textSize="20dp" />
             <TextView
                 android:id="@+id/casesNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="40dp"
                 android:textSize="20dp" />
         </TableRow>
         <TableRow
@@ -76,7 +74,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Deaths:"
-                android:layout_marginLeft="40dp"
                 android:textSize="20dp" />
             <TextView
                 android:id="@+id/deathsNumber"
@@ -95,7 +92,6 @@
                 android:id="@+id/recovered"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
                 android:text="Recovered:"
                 android:textSize="20dp" />
             <TextView
@@ -115,7 +111,6 @@
                 android:id="@+id/total_cases"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
                 android:text="Total cases: "
                 android:textSize="20dp" />
             <TextView
@@ -135,7 +130,6 @@
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
                 android:text="Last update date: "
                 android:textSize="20dp" />
             <TextView
