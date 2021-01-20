@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -42,14 +43,16 @@ public class FavouriteCountriesIO {
     }
 
     static public void saveList(Context context){
-
         try {
+            File file = new File("file.txt");
             FileOutputStream fos = context.openFileOutput("file.txt", Context.MODE_PRIVATE);
             PrintWriter pw = new PrintWriter(fos);
-            for(String country: countriesList)
+            for(String country: countriesList){
                 pw.println(country);
+            Log.d("YEAAAAAH ", file.getAbsolutePath() + country);}
+            pw.close();
             fos.close();
-            Log.d("YEAAAAAH", "saveList: dsa sa ");
+
         } catch (IOException e) {
             e.printStackTrace();
         }

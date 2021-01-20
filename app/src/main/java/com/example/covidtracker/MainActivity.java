@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     TextView contentText;
     Boolean isCountriesMenu = false;
     SearchView search;
+    Button favButton;
     private ContinentCountryApi continentCountryApi = null;
 
     @Override
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         contentText = (TextView) findViewById(R.id.textContent);
         search = (SearchView) findViewById(R.id.searchArea);
         header = (RelativeLayout) findViewById(R.id.relativeLayout);
+        favButton = (Button) findViewById(R.id.favourite_btn);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_SOURCE)
@@ -94,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 fillContinentLists();
                 generateButtons(continentsArray);
+                setFavButtonListeners();
             }
             @Override
             public void onFailure(Call<List<ContinentCountry>> call, Throwable t) {
@@ -281,6 +284,31 @@ public class MainActivity extends AppCompatActivity {
                 }
         }
     }
+
+    public void setFavButtonListeners(){
+        favButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFavouriteClick();
+            }
+        });
+    }
+
+    public void onFavouriteClick(){
+        buttonPanel.removeAllViews();
+        for(String item:FavouriteCountriesIO.getFavouriteCountries()){
+            Button btn = new Button(this);
+            btn.setText(item);
+            btn.setBackground(getResources().getDrawable(R.drawable.customized_button_normal));
+            btn.setTextColor(Color.parseColor("#c0c0c0"));
+            addCountryButtonEvents(btn, btn.getText().toString());
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width-120, 160);
+            params.setMargins(30, 10, 30, 10);
+            buttonPanel.addView(btn, params);
+        }
+        filteredCountries.clear();
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
