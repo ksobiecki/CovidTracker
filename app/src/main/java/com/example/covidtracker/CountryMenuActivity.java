@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -19,8 +22,10 @@ public class CountryMenuActivity extends AppCompatActivity {
     static final String API_SOURCE = "https://api.covid19api.com";
     static final String CLASS_TAG = "CountryMenuActivity";
     private PlaceholderAPI placeholderAPI;
+    private ToggleButton favouriteButton;
     List<CountryName> countrySpecifics = null;
     List<CountryShort> countryShortList;
+    List<String> favouriteCountries;
 
     TextView country, cases, deaths, recovered, total_cases, date;
 
@@ -35,9 +40,9 @@ public class CountryMenuActivity extends AppCompatActivity {
             this.getSupportActionBar().hide();
         } catch (NullPointerException e) {
         }
-
         String countryName = getIntent().getStringExtra("country");
         String ISO2 = getIntent().getStringExtra("countryCode");
+        favouriteCountries = getIntent().getStringArrayListExtra("favouriteCountries");
         country = (TextView) findViewById(R.id.country);
         cases = (TextView) findViewById(R.id.casesNumber);
         deaths = (TextView) findViewById(R.id.deathsNumber);
@@ -45,7 +50,11 @@ public class CountryMenuActivity extends AppCompatActivity {
         total_cases = (TextView) findViewById(R.id.totalCasesNumber);
         date = (TextView) findViewById(R.id.dateNumber);
         country.setText(countryName);
+        favouriteButton = (ToggleButton) findViewById(R.id.toggleButton);
+
         alert = new ViewDialog();
+
+        initialToggleButtonCheck(countryName);
 
         Retrofit retrofit2 = new Retrofit.Builder()
                 .baseUrl(API_SOURCE)
@@ -64,7 +73,6 @@ public class CountryMenuActivity extends AppCompatActivity {
                 String countryName = getCountryShortNameWhereISO2(ISO2);
 
                 Call<List<CountryName>> call = placeholderAPI.getListCountryName("/country/" + getCountryShortSlugFromCountryName(countryName));
-
 
                 call.enqueue(new Callback<List<CountryName>>() {
                     @Override
@@ -113,6 +121,31 @@ public class CountryMenuActivity extends AppCompatActivity {
             }
         });
 
+        setFavouriteButtonEvents(countryName);
+    }
+
+    public void initialToggleButtonCheck(String countryName){
+        for(String country: FavouriteCountriesIO.getFavouriteCountries()){
+            Log.d("Initial Toggle: ", "country from list " + country + "countryName " + countryName);
+            if(country.equals(countryName)){
+                favouriteButton.setChecked(true);
+            }
+        }
+    }
+
+    public void setFavouriteButtonEvents(String countryName){
+        favouriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(favouriteButton.isChecked()){
+                    FavouriteCountriesIO.addToList(countryName);
+                    Log.d("Toggle: ", "ON - added" + FavouriteCountriesIO.getFavouriteCountries().toString());
+                } else {
+                    FavouriteCountriesIO.removeFromList(countryName);
+                    Log.d("Toggle: ", "Off - removed" );
+                }
+            }
+        });
     }
 
     //zwraca ISO2 po podaniu nazwy

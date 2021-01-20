@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -16,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private List<String> sAmericaCountries = new ArrayList<>();
     private List<String> otherCountries = new ArrayList<>();
     private List<String> filteredCountries = new ArrayList<>();
-    public  List<String> favouriteCountries = new ArrayList<>();
+    private  List<String> favouriteCountries =new ArrayList<>();
+
     int width = 0;
     String currentContinent = null;
     List<ContinentCountry> continentCountries;
@@ -58,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
             this.getSupportActionBar().hide();
         } catch (NullPointerException e) {
         }
+        //FavouriteCountriesIO.saveList(getApplicationContext(), "Poland");
+
+        FavouriteCountriesIO.loadList(getApplicationContext());
+        //favouriteCountries = FavouriteCountriesIO.getFavouriteCountries();
+        Log.d("Pls ", FavouriteCountriesIO.getFavouriteCountries().toString());
+
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         width = displayMetrics.widthPixels;
@@ -196,6 +205,7 @@ public class MainActivity extends AppCompatActivity {
         Intent myIntent = new Intent(MainActivity.this, CountryMenuActivity.class);
         myIntent.putExtra("country", country);
         myIntent.putExtra("countryCode", ISO2WhereCountryName(country));
+        myIntent.putExtra("favouriteCountries", (Serializable) favouriteCountries);
         startActivity(myIntent);
     }
 
@@ -239,6 +249,7 @@ public class MainActivity extends AppCompatActivity {
             contentText.setText("");
             isCountriesMenu = false;
             changeHeaderLayout();
+            FavouriteCountriesIO.saveList(getApplicationContext());
         } else super.onBackPressed();
     }
 
@@ -270,7 +281,12 @@ public class MainActivity extends AppCompatActivity {
                 }
         }
     }
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("OnDestroy: ",  FavouriteCountriesIO.getFavouriteCountries().toString());
+        FavouriteCountriesIO.saveList(getApplicationContext());
+    }
     public String ISO2WhereCountryName(String countryName){
         for(ContinentCountry cc : continentCountries){
             if(cc != null && cc.getName().equals(countryName))
