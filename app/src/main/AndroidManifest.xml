@@ -16,10 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CovidTracker"
         android:windowSoftInputMode="adjustResize">
-        <activity android:name=".CountryMenuActivity" android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".CountryMenuActivity" android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" android:windowSoftInputMode="adjustResize" />
+                <action android:name="android.intent.action.MAIN" android:windowSoftInputMode="stateHidden|adjustResize" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

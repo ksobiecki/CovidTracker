@@ -1,6 +1,7 @@
 package com.example.covidtracker;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,10 +11,14 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -32,18 +37,18 @@ public class MainActivity extends AppCompatActivity {
 
     static final String API_SOURCE = "https://restcountries.eu";
 
-    private List<String> continentsArray = Arrays.asList(new String[]{"Africa", "Asia", "Australia and Oceania", "Europe", "North America", "South America", "Other"});
+    private List<String> continentsArray = Arrays.asList(new String[]{"Africa", "Asia", "Australia and Oceania", "Europe", "North America", "South America"});
     private List<String> africaCountries = new ArrayList<>();
     private List<String> asiaCountries = new ArrayList<>();
     private List<String> australiaCountries = new ArrayList<>();
     private List<String> europeCountries = new ArrayList<>();
     private List<String> nAmericaCountries = new ArrayList<>();
     private List<String> sAmericaCountries = new ArrayList<>();
-    private List<String> otherCountries = new ArrayList<>();
     private List<String> filteredCountries = new ArrayList<>();
     private  List<String> favouriteCountries =new ArrayList<>();
 
     int width = 0;
+    int height = 0;
     String currentContinent = null;
     List<ContinentCountry> continentCountries;
     LinearLayout buttonPanel;
@@ -52,34 +57,40 @@ public class MainActivity extends AppCompatActivity {
     Boolean isCountriesMenu = false;
     Boolean isFavourite = false;
     SearchView search;
+
     Button favButton, helpButton;
     HelpDialog help;
+    ScrollView scroll;
+
     private ContinentCountryApi continentCountryApi = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_main);
         try {
             this.getSupportActionBar().hide();
         } catch (NullPointerException e) {
         }
-        //FavouriteCountriesIO.saveList(getApplicationContext(), "Poland");
-
         FavouriteCountriesIO.loadList(getApplicationContext());
-        //favouriteCountries = FavouriteCountriesIO.getFavouriteCountries();
         Log.d("Pls ", FavouriteCountriesIO.getFavouriteCountries().toString());
-
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         width = displayMetrics.widthPixels;
+        height = displayMetrics.heightPixels;
         buttonPanel = (LinearLayout) findViewById(R.id.buttonPanel);
         contentText = (TextView) findViewById(R.id.textContent);
         search = (SearchView) findViewById(R.id.searchArea);
         header = (RelativeLayout) findViewById(R.id.relativeLayout);
         favButton = (Button) findViewById(R.id.favourite_btn);
+
         helpButton = (Button) findViewById(R.id.help_btn);
         help = new HelpDialog();
+
+        scroll = (ScrollView) findViewById(R.id.scrollArea);
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -156,6 +167,9 @@ public class MainActivity extends AppCompatActivity {
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width-120, 160);
             params.setMargins(30, 10, 30, 10);
             buttonPanel.addView(btn, params);
+            ConstraintLayout.LayoutParams sParams = (ConstraintLayout.LayoutParams) scroll.getLayoutParams();
+            sParams.height = height/2;
+            scroll.setLayoutParams(sParams);
         }
     }
 
@@ -246,14 +260,14 @@ public class MainActivity extends AppCompatActivity {
             case "south america":
                 generateButtons(sAmericaCountries);
                 break;
-            default:
-                generateButtons(otherCountries);
         }
     }
 
     @Override
     public void onBackPressed() {
-        if (isCountriesMenu) {
+        if(isFavourite)
+            onFavouriteClick();
+        else if (isCountriesMenu) {
             generateButtons(continentsArray);
             contentText.setText("");
             isCountriesMenu = false;
@@ -283,9 +297,6 @@ public class MainActivity extends AppCompatActivity {
                         if (continentCountry.getSubregion().equals("South America"))
                             sAmericaCountries.add(continentCountry.getName());
                         else nAmericaCountries.add(continentCountry.getName());
-                        break;
-                    default:
-                        otherCountries.add(continentCountry.getName());
                         break;
                 }
         }
