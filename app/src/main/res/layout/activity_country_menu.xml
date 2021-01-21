@@ -8,7 +8,6 @@
     android:background="@color/background_dark">
 
     <RelativeLayout
-
         android:id="@+id/relativeLayout"
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
@@ -17,15 +16,15 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/dark_sienna">
         <TextView
-            android:textColor="@color/white"
-            android:fontFamily="sans-serif-black"
-            android:textFontWeight="900"
             android:id="@+id/CovidTracker2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Covid Tracker"
             android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif-black"
+            android:textFontWeight="900"
+            android:text="Covid Tracker"
+            android:layout_marginTop="10dp"
             android:textSize="40dp"
              />
 
@@ -36,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
-            android:layout_marginTop="60dp"
+            android:layout_below="@id/CovidTracker2"
             android:layout_marginBottom="10dp"
             android:text="TextView"
             android:textSize="40dp"
@@ -67,6 +66,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
                 android:textColor="@color/white"/>
+
         </TableRow>
         <TableRow
             android:id="@+id/secondRow"
@@ -156,7 +156,7 @@
 
     <ToggleButton
 
-        android:id="@+id/toggleButtone"
+        android:id="@+id/toggleButton"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginStart="8dp"
@@ -172,6 +172,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/statsLayout" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

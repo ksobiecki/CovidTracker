@@ -1,77 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="@color/background_dark">
-    <RelativeLayout
-
-        android:id="@+id/relativeLayout"
-        android:layout_alignParentTop="true"
+    android:layout_width="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/dark_sienna">
-        <TextView
-            android:id="@+id/CovidTracker"
-            android:textColor="@color/white"
-            android:fontFamily="sans-serif-black"
-            android:textFontWeight="900"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Covid Tracker"
-            android:layout_centerHorizontal="true"
-            android:textSize="40dp"
-            />
+        android:layout_height="match_parent"
+        tools:context=".MainActivity"
+        android:background="@color/background_dark">
+        <RelativeLayout
 
-        <TextView
-            android:id="@+id/textContent"
-            android:textColor="@color/white"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="60dp"
-            android:layout_marginBottom="10dp"
-            android:text=""
-            android:textSize="40dp" />
-    </RelativeLayout>
-
-    <SearchView
-        android:background="@drawable/search_bar"
-        android:id="@+id/searchArea"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        app:queryHint="Search countries"
-        android:iconifiedByDefault="false"
-        app:layout_constraintBottom_toTopOf="@id/scrollArea"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/relativeLayout" />
-
-    <ScrollView
-        android:id="@+id/scrollArea"
-        android:layout_width="408dp"
-        android:layout_height="486dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchArea">
-
-        <LinearLayout
-            android:id="@+id/buttonPanel"
+            android:id="@+id/relativeLayout"
+            android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="vertical"></LinearLayout>
-    </ScrollView>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/dark_sienna">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/CovidTracker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/imageView2"
+                android:textFontWeight="900"
+                android:fontFamily="sans-serif-black"
+                android:text="Covid Tracker"
+                android:textColor="@color/white"
+                android:layout_marginTop="10dp"
+                android:textSize="50dp" />
+
+            <TextView
+                android:id="@+id/textContent"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/CovidTracker"
+                android:text=""
+                android:textSize="40dp"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"
+                android:gravity="center_horizontal"/>
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="20dp"
+                app:srcCompat="@drawable/icon" />
+        </RelativeLayout>
+
+        <SearchView
+            android:background="@drawable/search_bar"
+            android:id="@+id/searchArea"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            app:queryHint="Search countries"
+            android:iconifiedByDefault="false"
+            app:layout_constraintTop_toBottomOf="@id/relativeLayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+             />
+
+        <ScrollView
+            android:id="@+id/scrollArea"
+            android:layout_width="match_parent"
+            android:layout_height="416dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchArea"
+            >
+
+            <LinearLayout
+                android:id="@+id/buttonPanel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical"></LinearLayout>
+        </ScrollView>
+        <LinearLayout
+            android:id="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scrollArea"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            >
+
+            <Button
+                android:id="@+id/help_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Help"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="30dp"
+                android:backgroundTint="@color/dark_sienna"
+                />
+
+            <Button
+                android:id="@+id/favourite_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/dark_sienna"
+                android:text="Favourite"
+                 />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

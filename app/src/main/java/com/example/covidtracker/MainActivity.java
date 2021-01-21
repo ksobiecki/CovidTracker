@@ -5,13 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,12 +41,18 @@ public class MainActivity extends AppCompatActivity {
     private List<String> sAmericaCountries = new ArrayList<>();
     private List<String> otherCountries = new ArrayList<>();
     private List<String> filteredCountries = new ArrayList<>();
+    private  List<String> favouriteCountries =new ArrayList<>();
+
+    int width = 0;
     String currentContinent = null;
     List<ContinentCountry> continentCountries;
     LinearLayout buttonPanel;
+    RelativeLayout header;
     TextView contentText;
     Boolean isCountriesMenu = false;
+    Boolean isFavourite = false;
     SearchView search;
+    Button favButton;
     private ContinentCountryApi continentCountryApi = null;
 
     @Override
@@ -51,10 +63,20 @@ public class MainActivity extends AppCompatActivity {
             this.getSupportActionBar().hide();
         } catch (NullPointerException e) {
         }
+        //FavouriteCountriesIO.saveList(getApplicationContext(), "Poland");
 
+        FavouriteCountriesIO.loadList(getApplicationContext());
+        //favouriteCountries = FavouriteCountriesIO.getFavouriteCountries();
+        Log.d("Pls ", FavouriteCountriesIO.getFavouriteCountries().toString());
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        width = displayMetrics.widthPixels;
         buttonPanel = (LinearLayout) findViewById(R.id.buttonPanel);
         contentText = (TextView) findViewById(R.id.textContent);
         search = (SearchView) findViewById(R.id.searchArea);
+        header = (RelativeLayout) findViewById(R.id.relativeLayout);
+        favButton = (Button) findViewById(R.id.favourite_btn);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_SOURCE)
@@ -75,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 fillContinentLists();
                 generateButtons(continentsArray);
+                setFavButtonListeners();
             }
             @Override
             public void onFailure(Call<List<ContinentCountry>> call, Throwable t) {
@@ -112,34 +135,52 @@ public class MainActivity extends AppCompatActivity {
 
     public void generateButtons(List<String> contentArray) {
         buttonPanel.removeAllViews();
-        Log.d("Trąbla", "onQueryTextSubmit: ");
         for (String item : contentArray) {
             Button btn = new Button(this);
             btn.setText(item);
             btn.setTextColor(Color.parseColor("#c0c0c0"));
-            btn.setBackground(getResources().getDrawable(R.drawable.customized_button));
+            btn.setBackground(getResources().getDrawable(R.drawable.customized_button_normal));
 
             if (contentArray == continentsArray) {
                 addContinentButtonsEvents(btn, btn.getText().toString());
             } else {
                 addCountryButtonEvents(btn, btn.getText().toString());
+
             }
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(600, 160);
-            params.setMargins(240, 10, 0, 10);
+            Log.d("Width", "generateButtons: Width" + width);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width-120, 160);
+            params.setMargins(30, 10, 30, 10);
             buttonPanel.addView(btn, params);
         }
     }
 
+    public void changeHeaderLayout(){
+        ImageView logo = (ImageView) findViewById(R.id.imageView2);
+        TextView appName = (TextView) findViewById(R.id.CovidTracker);
+        TextView textContent = (TextView) findViewById(R.id.textContent);
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) appName.getLayoutParams();
+        if(isCountriesMenu){
+            params.addRule(RelativeLayout.CENTER_VERTICAL,0);
+            logo.setVisibility(View.GONE);
+            textContent.setVisibility(View.VISIBLE);
+            textContent.setTextSize(TypedValue.COMPLEX_UNIT_DIP,40);
+        } else {
+            params.addRule(RelativeLayout.CENTER_VERTICAL,1);
+            logo.setVisibility(View.VISIBLE);
+            textContent.setVisibility(View.GONE);
+            textContent.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 50);
+        }
+    }
     public void filterButtons(){
         buttonPanel.removeAllViews();
         for(String item:filteredCountries){
             Button btn = new Button(this);
             btn.setText(item);
-            btn.setBackground(getResources().getDrawable(R.drawable.customized_button));
+            btn.setBackground(getResources().getDrawable(R.drawable.customized_button_normal));
             btn.setTextColor(Color.parseColor("#c0c0c0"));
             addCountryButtonEvents(btn, btn.getText().toString());
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(600, 160);
-            params.setMargins(240, 10, 0, 10);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width-120, 160);
+            params.setMargins(30, 10, 30, 10);
             buttonPanel.addView(btn, params);
         }
         filteredCountries.clear();
@@ -151,7 +192,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 onContinentClick(name);
                 contentText.setText(name);
-                isCountriesMenu = true;
             }
         });
     }
@@ -169,11 +209,15 @@ public class MainActivity extends AppCompatActivity {
         Intent myIntent = new Intent(MainActivity.this, CountryMenuActivity.class);
         myIntent.putExtra("country", country);
         myIntent.putExtra("countryCode", ISO2WhereCountryName(country));
+        myIntent.putExtra("favouriteCountries", (Serializable) favouriteCountries);
         startActivity(myIntent);
     }
 
     public void onContinentClick(String continent) {
+        isCountriesMenu = true;
+        changeHeaderLayout();
         chooseContinentCountries(continent);
+
     }
     public void chooseContinentCountries(String continent){
         String continentName = continent.toLowerCase();
@@ -208,6 +252,8 @@ public class MainActivity extends AppCompatActivity {
             generateButtons(continentsArray);
             contentText.setText("");
             isCountriesMenu = false;
+            changeHeaderLayout();
+            FavouriteCountriesIO.saveList(getApplicationContext());
         } else super.onBackPressed();
     }
 
@@ -240,6 +286,43 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void setFavButtonListeners(){
+        favButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onFavouriteClick();
+            }
+        });
+    }
+
+    public void onFavouriteClick(){
+        buttonPanel.removeAllViews();
+        if(!isFavourite){
+            favButton.setText("BACK");
+            isFavourite=true;
+            for(String item:FavouriteCountriesIO.getFavouriteCountries()){
+                Button btn = new Button(this);
+                btn.setText(item);
+                btn.setBackground(getResources().getDrawable(R.drawable.customized_button_normal));
+                btn.setTextColor(Color.parseColor("#c0c0c0"));
+                addCountryButtonEvents(btn, btn.getText().toString());
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width-120, 160);
+                params.setMargins(30, 10, 30, 10);
+                buttonPanel.addView(btn, params);
+            }
+        } else {
+            favButton.setText("FAVOURITE");
+            isFavourite=false;
+            generateButtons(continentsArray);
+            }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("OnDestroy: ",  FavouriteCountriesIO.getFavouriteCountries().toString());
+        FavouriteCountriesIO.saveList(getApplicationContext());
+    }
     public String ISO2WhereCountryName(String countryName){
         for(ContinentCountry cc : continentCountries){
             if(cc != null && cc.getName().equals(countryName))
