@@ -248,7 +248,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (isCountriesMenu) {
+        if(isFavourite)
+            onFavouriteClick();
+        else if (isCountriesMenu) {
             generateButtons(continentsArray);
             contentText.setText("");
             isCountriesMenu = false;
