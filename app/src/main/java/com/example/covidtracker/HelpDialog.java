@@ -2,7 +2,9 @@ package com.example.covidtracker;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -17,10 +19,12 @@ public class HelpDialog {
         dialog.setContentView(R.layout.help_popup);
 
         TextView title = (TextView) dialog.findViewById(R.id.help_title);
-        title.setText("przekozacki CovidTracker!");
+        title.setText("About!");
 
         TextView description = (TextView) dialog.findViewById(R.id.help_desc);
-        description.setText("linijka1\nlinijka2\n\n\n\n\n\n\ndddduuuuuuuuppppaaaa\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nscroll");
+        description.setText("Covid Tracker jest aplikacją służącą do przeglądania statystyk dotyczących zarażeń virusem Covid-19.\n" +
+                "\nAby znaleźć statystyki dla danego kraju należy nacisnąć na przycisk z nazwą kontynentu na którym znajduje się wybrany kraj, a następnie znaleźć państwo na liście. Przez listę można scrollować. Państwo można również znaleźć korzystając z wyszukiwarki znajdującej państwa. \n" +
+                "\nPaństwa można dodać do ulubionych, aby móc mieć do nich szybki i łatwy dostęp przy ponownym uruchomieniu aplikacji. Aby dodać państwo do ulubionych, po wybraniu państwa z listy należy kliknąć serduszko, aby dodać lub usunąć je z listy ulubionych. Można uzyskać dostęp do swoich ulubionych krajów klikając przycisk Favourite z poziomu menu głównego.");
 
         Button dialogButton = (Button) dialog.findViewById(R.id.button_end);
         dialogButton.setTextColor(Color.parseColor("#c0c0c0"));
@@ -33,5 +37,16 @@ public class HelpDialog {
             }
         });
         dialog.show();
+
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
+                if(keyCode == KeyEvent.KEYCODE_BACK){
+                    dialog.cancel();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 }

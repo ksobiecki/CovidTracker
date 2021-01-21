@@ -21,7 +21,7 @@
             android:gravity="center_horizontal"
             android:textAlignment="center"
             android:text="About!"
-            android:textSize="30dp" />
+            android:textSize="40dp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -46,11 +46,11 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:textSize="23dp"
+                android:textSize="17dp"
                 />
             <Button
                 android:id="@+id/button_end"
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
                 app:backgroundTint="@color/almond"
@@ -60,7 +60,7 @@
                 android:layout_marginBottom="18dp"
                 android:textSize="20dp"
                 android:textColor="@color/dark_sienna"
-                android:text="Return"
+                android:text="OK"
                 android:layout_below="@+id/help_desc"
                 />
                 </RelativeLayout>
