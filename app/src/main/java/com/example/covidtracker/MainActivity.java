@@ -57,8 +57,11 @@ public class MainActivity extends AppCompatActivity {
     Boolean isCountriesMenu = false;
     Boolean isFavourite = false;
     SearchView search;
-    Button favButton;
+
+    Button favButton, helpButton;
+    HelpDialog help;
     ScrollView scroll;
+
     private ContinentCountryApi continentCountryApi = null;
 
     @Override
@@ -83,7 +86,12 @@ public class MainActivity extends AppCompatActivity {
         search = (SearchView) findViewById(R.id.searchArea);
         header = (RelativeLayout) findViewById(R.id.relativeLayout);
         favButton = (Button) findViewById(R.id.favourite_btn);
+
+        helpButton = (Button) findViewById(R.id.help_btn);
+        help = new HelpDialog();
+
         scroll = (ScrollView) findViewById(R.id.scrollArea);
+
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_SOURCE)
@@ -105,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 fillContinentLists();
                 generateButtons(continentsArray);
                 setFavButtonListeners();
+                setHelpButtonListener();
             }
             @Override
             public void onFailure(Call<List<ContinentCountry>> call, Throwable t) {
@@ -322,6 +331,15 @@ public class MainActivity extends AppCompatActivity {
             isFavourite=false;
             generateButtons(continentsArray);
             }
+    }
+
+    public void setHelpButtonListener(){
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                help.showDialog(MainActivity.this);
+            }
+        });
     }
 
     @Override

@@ -15,4 +15,5 @@
     <color name="background_dark">#121212</color>
     <color name="font_gray">#c0c0c0</color>
     <color name="darker_sienna">#2E0C15</color>
+    <color name="transparent">#00000000</color>
 </resources>
