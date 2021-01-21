@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout header;
     TextView contentText;
     Boolean isCountriesMenu = false;
+    Boolean isFavourite = false;
     SearchView search;
     Button favButton;
     private ContinentCountryApi continentCountryApi = null;
@@ -296,17 +297,24 @@ public class MainActivity extends AppCompatActivity {
 
     public void onFavouriteClick(){
         buttonPanel.removeAllViews();
-        for(String item:FavouriteCountriesIO.getFavouriteCountries()){
-            Button btn = new Button(this);
-            btn.setText(item);
-            btn.setBackground(getResources().getDrawable(R.drawable.customized_button_normal));
-            btn.setTextColor(Color.parseColor("#c0c0c0"));
-            addCountryButtonEvents(btn, btn.getText().toString());
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width-120, 160);
-            params.setMargins(30, 10, 30, 10);
-            buttonPanel.addView(btn, params);
-        }
-        filteredCountries.clear();
+        if(!isFavourite){
+            favButton.setText("BACK");
+            isFavourite=true;
+            for(String item:FavouriteCountriesIO.getFavouriteCountries()){
+                Button btn = new Button(this);
+                btn.setText(item);
+                btn.setBackground(getResources().getDrawable(R.drawable.customized_button_normal));
+                btn.setTextColor(Color.parseColor("#c0c0c0"));
+                addCountryButtonEvents(btn, btn.getText().toString());
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width-120, 160);
+                params.setMargins(30, 10, 30, 10);
+                buttonPanel.addView(btn, params);
+            }
+        } else {
+            favButton.setText("FAVOURITE");
+            isFavourite=false;
+            generateButtons(continentsArray);
+            }
     }
 
     @Override
