@@ -10,6 +10,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -63,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
             this.getSupportActionBar().hide();
         } catch (NullPointerException e) {
         }
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //FavouriteCountriesIO.saveList(getApplicationContext(), "Poland");
 
         FavouriteCountriesIO.loadList(getApplicationContext());
