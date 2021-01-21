@@ -76,7 +76,7 @@
         <ScrollView
             android:id="@+id/scrollArea"
             android:layout_width="match_parent"
-            android:layout_height="416dp"
+            android:layout_height="406dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
